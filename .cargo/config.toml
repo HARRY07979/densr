@@ -1,0 +1,38 @@
+# Toolchain wiring for the gnu target.
+#
+# Links with rustc's own bundled LLVM linker (rust-lld) and Rust's bundled
+# mingw-w64 CRT objects, both of which ship inside the rustup toolchain. So
+# the build needs nothing on PATH except cargo itself: no MSVC Build Tools, no
+# winlibs, no MinGW install.
+#
+#   cargo build --release
+#
+# Portable setup (works on any computer with rustup):
+#   1. rustup install stable-x86_64-pc-windows-gnu
+#   2. cargo build --release
+#
+# Why not MSVC: it is the more standard target on Windows, but it requires
+# Visual Studio Build Tools (~5-10 GB) for link.exe. A machine can have the
+# msvc toolchain installed without those build tools, in which case msvc
+# cannot link at all.
+#
+# Why this matters for a released binary: linking the bundled libgcc
+# statically drops the `libgcc_s_dw2-1.dll` import. With MinGW gcc on PATH the
+# release binary imported that DLL and had to ship it next to the exe. The
+# only imports left are kernel32.dll, ntdll.dll and msvcrt.dll, which are
+# present on every Windows install. OpenCL's DLLs are not imports: gpu.rs
+# LoadLibraryA's them at run time, so a machine without a GPU driver is fine.
+
+[target.x86_64-pc-windows-gnu]
+linker = "rust-lld"
+rustflags = [
+    "-C", "target-feature=+crt-static",
+    "-C", "link-self-contained=yes",
+]
+
+[build]
+target = "x86_64-pc-windows-gnu"
+
+# Nothing in this crate compiles C. If a future dependency needs a C compiler,
+# install MinGW-w64 (winlibs works) and add its mingw64\bin to PATH; the bundled
+# self-contained objects cover this crate's own link step only.

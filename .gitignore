@@ -1,0 +1,36 @@
+# Build output
+/target/
+/dist/
+
+# Benchmarks: the corpus and downloaded tools are not vendored.
+# Fetch them with .\bench\fetch-corpus.ps1.
+/bench/corpora/
+/bench/tools/*.exe
+/bench/tools/*.dll
+/bench/tools/7zr.exe
+
+# Archives produced by tests, smoke runs or benchmarks
+*.dnsr
+*.dsr
+*.zip
+*.7z
+
+# Scratch space used by manual measurements
+/scratch/
+/tmp/
+
+# Editor and OS noise
+.vscode/
+.idea/
+*.swp
+*~
+Thumbs.db
+desktop.ini
+
+# Python bytecode from bench tools
+__pycache__/
+*.pyc
+
+# Local env files (never commit tokens or machine paths)
+.env
+.env.*

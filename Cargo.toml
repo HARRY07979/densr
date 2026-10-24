@@ -1,0 +1,25 @@
+[package]
+name = "densr"
+version = "1.0.0-beta.1"
+edition = "2021"
+description = "Densr -- self-contained archiver: own container format, own codec, no dependencies"
+
+[lib]
+name = "densr"
+path = "src/lib.rs"
+
+[[bin]]
+name = "densr"
+path = "src/main.rs"
+
+# No dependencies. Every hash, checksum, compression codec and container record
+# in this crate is implemented in `src/`. That is the point: the format is ours,
+# so nothing about it is inherited from another project's on-disk choices.
+[dependencies]
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true

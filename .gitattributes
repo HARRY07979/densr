@@ -1,0 +1,22 @@
+# Normalise line endings in the repository. The build does not care, but
+# consistent diffs do.
+* text=auto
+
+*.rs    text eol=lf
+*.toml  text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.json  text eol=lf
+
+# PowerShell is happiest with CRLF on Windows and the setup script is
+# Windows-only anyway.
+*.ps1   text eol=crlf
+
+# Binary artefacts must never be rewritten.
+*.exe   binary
+*.dll   binary
+*.dnsr  binary
+*.dsr   binary
+*.zip   binary
+*.7z    binary
