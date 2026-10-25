@@ -259,6 +259,9 @@ src/
   checksum.rs   CRC-32 and the 64-bit block hash
   gpu.rs        optional OpenCL backend (runtime-loaded)
   util.rs       byte I/O, varints, size formatting, time formatting
+packaging/
+  build-linux.sh   builds setup.deb and setup.rpm from Cargo.toml
+  densr.spec       RPM spec used by build-linux.sh
 ```
 
 ## Limitations
