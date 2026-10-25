@@ -3,6 +3,7 @@ name = "densr"
 version = "1.0.0-beta.1"
 edition = "2021"
 description = "Densr -- self-contained archiver: own container format, own codec, no dependencies"
+license = "Apache-2.0"
 
 [lib]
 name = "densr"
